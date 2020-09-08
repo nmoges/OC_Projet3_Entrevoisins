@@ -3,4 +3,18 @@
     <string name="tab_neighbour_title">My neighbours</string>
     <string name="tab_favorites_title">Favorites</string>
     <string name="activity_new_neighbour">New neighbour</string>
+
+
+    <!-- activity_info_neighbour.xml -->
+    <string name="title_about_me">A propos de moi</string>
+    <!-- The following string values are for testing layouts (default values) -->
+    <string name="name_on_avatar">Caroline</string>
+    <string name="title_name_neighbour">Caroline</string>
+    <string name="location_neighbour">Saint pierre du mont à 5km</string>
+    <string name="phone_neighbour">+33 6 86 57 90 14</string>
+    <string name="website_neighbour">www.facebook.fr/caroline</string>
+    <string name="txt_about_me_neighbour">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse
+     lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam.
+    Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie,
+        enim est eleifend mi, non fermentum diam nisl sit amet erat. </string>
 </resources>
