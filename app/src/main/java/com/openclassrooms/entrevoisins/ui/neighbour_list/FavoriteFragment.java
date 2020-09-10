@@ -12,27 +12,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
-import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
+import com.openclassrooms.entrevoisins.events.UnselectFavoriteEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import java.util.ArrayList;
 import java.util.List;
 
-public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerViewAdapter.ListNeighbourListener {
+public class FavoriteFragment extends Fragment implements MyFavoriteRecyclerViewAdapter.ListFavoriteListener {
 
     private NeighbourApiService mApiService;
-    private List<Neighbour> mNeighbours;
+    private List<Neighbour> mFavorites;
     private RecyclerView mRecyclerView;
 
     private static String TAG_NEIGHBOUR_INTENT_EXTRA = "NEIGHBOUR_EXTRA";
 
     /**
      * Create and return a new instance
-     * @return @{@link NeighbourFragment}
+     * @return @{@link FavoriteFragment}
      */
-    public static NeighbourFragment newInstance() {
-        return new NeighbourFragment();
+    public static FavoriteFragment newInstance() {
+        return new FavoriteFragment();
     }
 
     @Override
@@ -44,7 +45,7 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_neighbour_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_favorite_list, container, false);
         Context context = view.getContext();
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -52,50 +53,52 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
         return view;
     }
 
-    /**
-     * Init the List of neighbours
-     */
-    private void initList() {
-        mNeighbours = mApiService.getNeighbours();
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, this));
-    }
-
     @Override
-    public void onResume() {
-        super.onResume();
-        initList();
-    }
-
-    @Override
-    public void onStart() {
+    public void onStart(){
         super.onStart();
         EventBus.getDefault().register(this);
     }
 
     @Override
-    public void onStop() {
+    public void onResume(){
+        super.onResume();
+        initFavoritesList();
+    }
+
+    @Override
+    public void onStop(){
         super.onStop();
         EventBus.getDefault().unregister(this);
     }
 
-    /**
-     * Fired if the user clicks on a delete button
-     * @param event
-     */
     @Subscribe
-    public void onDeleteNeighbour(DeleteNeighbourEvent event) {
-        mApiService.deleteNeighbour(event.neighbour);
-        initList();
+    public void onUnselectFavorite(UnselectFavoriteEvent event){
+        // Remove from displayed favorite list
+        mFavorites.remove(event.favorite);
+
+        // Update status in user list
+        mApiService.updateFavoriteStatus(event.favorite);
+
+        // Update RecyclerView display
+        try{ mRecyclerView.getAdapter().notifyDataSetChanged(); }
+        catch (NullPointerException exception){ exception.printStackTrace(); }
     }
 
-    /**
-     * MyNeighbourRecyclerViewAdapter.ListNeighbourListener interface implementation
-     * @param position
-     */
+    private void initFavoritesList(){
+        mFavorites = new ArrayList<>();
+        // Get all favorite neighbours
+        for(int i = 0; i < mApiService.getNeighbours().size(); i++){
+            if(mApiService.getNeighbours().get(i).getFavorite()){
+                mFavorites.add(mApiService.getNeighbours().get(i));
+            }
+        }
+        mRecyclerView.setAdapter(new MyFavoriteRecyclerViewAdapter(mFavorites, this));
+    }
+
     @Override
-    public void onClickItemNeighbour(int position) {
+    public void onClickItemFavorite(int position) {
         Intent launchActivityInfo = new Intent(getActivity(), InfoNeighbourActivity.class);
-        launchActivityInfo.putExtra(TAG_NEIGHBOUR_INTENT_EXTRA, mNeighbours.get(position));
+        launchActivityInfo.putExtra(TAG_NEIGHBOUR_INTENT_EXTRA, mFavorites.get(position));
         startActivity(launchActivityInfo);
     }
 }
