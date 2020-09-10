@@ -53,6 +53,7 @@ public class FavoriteFragment extends Fragment implements MyFavoriteRecyclerView
         return view;
     }
 
+
     @Override
     public void onStart(){
         super.onStart();
@@ -84,7 +85,7 @@ public class FavoriteFragment extends Fragment implements MyFavoriteRecyclerView
         catch (NullPointerException exception){ exception.printStackTrace(); }
     }
 
-    private void initFavoritesList(){
+    public void initFavoritesList(){
         mFavorites = new ArrayList<>();
         // Get all favorite neighbours
         for(int i = 0; i < mApiService.getNeighbours().size(); i++){

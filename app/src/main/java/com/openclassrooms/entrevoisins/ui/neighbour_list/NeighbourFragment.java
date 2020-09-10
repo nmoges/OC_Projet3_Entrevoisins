@@ -27,6 +27,7 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
 
     private static String TAG_NEIGHBOUR_INTENT_EXTRA = "NEIGHBOUR_EXTRA";
 
+    private ListNeighbourActivity activity;
     /**
      * Create and return a new instance
      * @return @{@link NeighbourFragment}
@@ -39,6 +40,7 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApiService = DI.getNeighbourApiService();
+
     }
 
     @Override
@@ -49,6 +51,8 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+
+        activity = (ListNeighbourActivity) getActivity();
         return view;
     }
 
@@ -58,6 +62,13 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
     private void initList() {
         mNeighbours = mApiService.getNeighbours();
         mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, this));
+    }
+
+    /**
+     * Update the list of FavoriteFragment
+     */
+    private void notifyFavoriteListChange(){
+        activity.getMPagerAdapter().getFavoriteFragment().initFavoritesList();
     }
 
     @Override
@@ -85,7 +96,12 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
         mApiService.deleteNeighbour(event.neighbour);
+
+        // Update Neighbour list
         initList();
+
+        // If deleted Neighbour was a "Favorite", update "Favorite" list
+        if(event.neighbour.getFavorite()){notifyFavoriteListChange();}
     }
 
     /**
