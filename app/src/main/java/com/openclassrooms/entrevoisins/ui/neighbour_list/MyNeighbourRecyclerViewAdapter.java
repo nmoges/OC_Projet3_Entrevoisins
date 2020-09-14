@@ -39,10 +39,11 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Neighbour neighbour = mNeighbours.get(position);
         holder.mNeighbourName.setText(neighbour.getName());
+
         Glide.with(holder.mNeighbourAvatar.getContext())
-                .load(neighbour.getAvatarUrl())
-                .apply(RequestOptions.circleCropTransform())
-                .into(holder.mNeighbourAvatar);
+                    .load(neighbour.getAvatarUrl())
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(holder.mNeighbourAvatar);
 
         holder.mDeleteButton.setOnClickListener((View v) -> {
                 EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));

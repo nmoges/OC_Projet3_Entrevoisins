@@ -44,6 +44,7 @@ public class MyFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<MyFavori
         Glide.with(holder.mFavoriteAvatar.getContext())
                 .load(favorite.getAvatarUrl())
                 .apply(RequestOptions.centerCropTransform())
+                .apply(RequestOptions.timeoutOf(2000))
                 .into(holder.mFavoriteAvatar);
 
         holder.mFavoriteButton.setOnClickListener((View v) -> {

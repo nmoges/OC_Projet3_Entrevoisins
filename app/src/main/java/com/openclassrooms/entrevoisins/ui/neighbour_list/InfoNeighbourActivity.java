@@ -52,6 +52,7 @@ public class InfoNeighbourActivity extends AppCompatActivity {
 
         // Get info Neighbour to display from intent
         Intent infoNeighbour = getIntent();
+
         if(infoNeighbour.hasExtra(TAG_NEIGHBOUR_INTENT_EXTRA)){
             neighbour = (Neighbour) infoNeighbour.getSerializableExtra(TAG_NEIGHBOUR_INTENT_EXTRA);
             initializeInfoToDisplay();

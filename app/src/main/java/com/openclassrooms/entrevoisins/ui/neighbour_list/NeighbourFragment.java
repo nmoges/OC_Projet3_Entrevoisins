@@ -11,17 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.openclassrooms.entrevoisins.R;
-import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
-import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import java.util.List;
 
 public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerViewAdapter.ListNeighbourListener {
 
-    private NeighbourApiService mApiService;
+    //private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
 
@@ -39,8 +37,6 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mApiService = DI.getNeighbourApiService();
-
     }
 
     @Override
@@ -53,28 +49,9 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
         activity = (ListNeighbourActivity) getActivity();
+
+
         return view;
-    }
-
-    /**
-     * Init the List of neighbours
-     */
-    private void initList() {
-        mNeighbours = mApiService.getNeighbours();
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, this));
-    }
-
-    /**
-     * Update the list of FavoriteFragment
-     */
-    private void notifyFavoriteListChange(){
-        activity.getMPagerAdapter().getFavoriteFragment().initFavoritesList();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        initList();
     }
 
     @Override
@@ -84,9 +61,30 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        initList();
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
+    }
+
+    /**
+     * Init the List of neighbours
+     */
+    private void initList() {
+        mNeighbours = activity.getmApiService().getNeighbours();
+        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, this));
+    }
+
+    /**
+     * Update the list of FavoriteFragment
+     */
+    private void notifyFavoriteListChange(Neighbour neighbour){
+         activity.getMPagerAdapter().getFavoriteFragment().updateAfterDelete(neighbour);
     }
 
     /**
@@ -95,13 +93,13 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
      */
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
-        mApiService.deleteNeighbour(event.neighbour);
+        activity.getmApiService().deleteNeighbour(event.neighbour);
 
         // Update Neighbour list
-        initList();
+        mRecyclerView.getAdapter().notifyDataSetChanged();
 
         // If deleted Neighbour was a "Favorite", update "Favorite" list
-        if(event.neighbour.getFavorite()){notifyFavoriteListChange();}
+        if(event.neighbour.getFavorite()){notifyFavoriteListChange(event.neighbour);}
     }
 
     /**

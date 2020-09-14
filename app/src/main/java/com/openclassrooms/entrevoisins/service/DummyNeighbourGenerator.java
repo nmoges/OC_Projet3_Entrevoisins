@@ -37,7 +37,7 @@ public abstract class DummyNeighbourGenerator {
                             "ut orci ut scelerisque. Aliquam quis metus egestas, viverra neque vel, ornare velit. Nullam lobortis justo et ipsum " +
                             "sodales sodales. Etiam volutpat laoreet tellus, ultrices maximus nulla luctus ultricies. Praesent a dapibus arcu. In at magna " +
                             "in velit placerat vehicula nec in purus.",
-                    false,
+                    true,
                     "www.facebook.fr/jack"),
 
             new Neighbour(3,
@@ -58,7 +58,7 @@ public abstract class DummyNeighbourGenerator {
                             "Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi ipsum sem, " +
                             "commodo in nisi maximus, semper dignissim metus. Fusce eget nunc sollicitudin, dignissim " +
                             "tortor quis, consectetur mauris. ",
-                    false,
+                    true,
                     "www.facebook.fr/vincent"),
 
             new Neighbour(5,
@@ -69,7 +69,7 @@ public abstract class DummyNeighbourGenerator {
                     "Fusce in ligula mi. Aliquam in sagittis tellus. Suspendisse tempor, velit et " +
                             "cursus facilisis, eros sapien sollicitudin mauris, et ultrices " +
                             "lectus sapien in neque. ",
-                    false,
+                    true,
                     "www.facebook.fr/elodie"),
 
             new Neighbour(6,
@@ -83,7 +83,7 @@ public abstract class DummyNeighbourGenerator {
                             "Nullam arcu purus, cursus a sollicitudin eu, lobortis vitae est. Sed sodales sit " +
                             "amet magna nec finibus. Nulla pellentesque, justo ut bibendum mollis, urna diam " +
                             "hendrerit dolor, non gravida urna quam id eros. ",
-                    false,
+                    true,
                     "www.facebook.fr/sylvain"),
 
             new Neighbour(7,
@@ -92,7 +92,7 @@ public abstract class DummyNeighbourGenerator {
                     "Saint-Pierre-du-Mont ; 14km",
                     "+33 6 96 57 90 01",
                     "Vestibulum non leo vel mi ultrices pellentesque. ",
-                    false,
+                    true,
                     "www.facebook.fr/laetitia"),
 
             new Neighbour(8,
@@ -113,7 +113,7 @@ public abstract class DummyNeighbourGenerator {
                             "Nunc ullamcorper, erat non viverra feugiat, massa odio facilisis ligula, " +
                             "ut pharetra risus libero eget elit. Nulla malesuada, purus eu malesuada malesuada, est " +
                             "purus ullamcorper ipsum, quis congue velit mi sed lorem.",
-                    false,
+                    true,
                     "www.facebook.fr/joseph"),
 
             new Neighbour(10,
@@ -130,7 +130,7 @@ public abstract class DummyNeighbourGenerator {
                             "eleifend justo iaculis, ac ullamcorper velit consectetur. Aliquam vitae elit ac ante ultricies aliquet " +
                             "vel at felis. Suspendisse ac placerat odio. Cras non dapibus arcu. Fusce pharetra nisi at orci rhoncus, " +
                             "vitae tristique nibh euismod.",
-                    false,
+                    true,
                     "www.facebook.fr/emma"),
 
             new Neighbour(11,
@@ -149,7 +149,7 @@ public abstract class DummyNeighbourGenerator {
                     "at nulla finibus sollicitudin. Nunc dolor mauris, blandit id ullamcorper vel, lacinia ac nisi. Vestibulum et sapien tempor, " +
                     "egestas lorem vitae, faucibus urna. Duis id odio massa. Class aptent taciti sociosqu ad litora torquent per conubia nostra, " +
                     "per inceptos himenaeos.",
-                    false,
+                    true,
                     "www.facebook.fr/patrick"),
 
             new Neighbour(12,
@@ -168,7 +168,7 @@ public abstract class DummyNeighbourGenerator {
                     "at nulla finibus sollicitudin. Nunc dolor mauris, blandit id ullamcorper vel, lacinia ac nisi. Vestibulum et sapien tempor, " +
                     "egestas lorem vitae, faucibus urna. Duis id odio massa. Class aptent taciti sociosqu ad litora torquent per conubia nostra, " +
                     "per inceptos himenaeos.",
-                    false,
+                    true,
                     "www.facebook.fr/ludovic")
     );
 
