@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,7 +35,7 @@ public class InfoNeighbourActivity extends AppCompatActivity {
     @BindView(R.id.text_about_me_neighbour) TextView textAboutMeNeighbour;
 
     private static String TAG_NEIGHBOUR_INTENT_EXTRA = "NEIGHBOUR_EXTRA";
-    private Neighbour neighbour;
+    private Neighbour mNeighbour;
 
     private NeighbourApiService mApiService;
 
@@ -54,7 +55,7 @@ public class InfoNeighbourActivity extends AppCompatActivity {
         Intent infoNeighbour = getIntent();
 
         if(infoNeighbour.hasExtra(TAG_NEIGHBOUR_INTENT_EXTRA)){
-            neighbour = (Neighbour) infoNeighbour.getSerializableExtra(TAG_NEIGHBOUR_INTENT_EXTRA);
+            mNeighbour = (Neighbour) infoNeighbour.getSerializableExtra(TAG_NEIGHBOUR_INTENT_EXTRA);
             initializeInfoToDisplay();
         }
 
@@ -74,22 +75,24 @@ public class InfoNeighbourActivity extends AppCompatActivity {
 
     public void initializeInfoToDisplay(){
         //TextViews
-        nameOnAvatar.setText(neighbour.getName());
-        titleNameNeighbour.setText(neighbour.getName());
+        nameOnAvatar.setText(mNeighbour.getName());
+        titleNameNeighbour.setText(mNeighbour.getName());
 
-        if(neighbour.getAddress() != null){ locationNeighbour.setText(neighbour.getAddress());}
-        if(neighbour.getPhoneNumber() != null){ phoneNeighbour.setText(neighbour.getPhoneNumber());}
-        if(neighbour.getAboutMe() != null) { textAboutMeNeighbour.setText(neighbour.getAboutMe());}
-        if(neighbour.getWebSite() != null) { websiteNeighbour.setText(neighbour.getWebSite());}
+        if(mNeighbour.getAddress() != null){ locationNeighbour.setText(mNeighbour.getAddress());}
+        if(mNeighbour.getPhoneNumber() != null){ phoneNeighbour.setText(mNeighbour.getPhoneNumber());}
+        if(mNeighbour.getAboutMe() != null) { textAboutMeNeighbour.setText(mNeighbour.getAboutMe());}
+        if(mNeighbour.getWebSite() != null) { websiteNeighbour.setText(mNeighbour.getWebSite());}
 
         // Avatar
         Glide.with(InfoNeighbourActivity.this)
-                .load(neighbour.getAvatarUrl())
+                .load(mNeighbour.getAvatarUrl())
+                .skipMemoryCache(false)
+                .timeout(500)
                 .apply(RequestOptions.centerCropTransform())
                 .into(avatarNeighbour);
 
         // FloatingButton status
-        if(neighbour.getFavorite()){ fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_yellow_24dp, null));}
+        if(mNeighbour.getFavorite()){ fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_yellow_24dp, null));}
         else{ fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_border_yellow_24dp, null));}
     }
 
@@ -98,15 +101,15 @@ public class InfoNeighbourActivity extends AppCompatActivity {
         // Find which item must been modified in list
         int index = mApiService.getNeighbours().indexOf(event.favorite);
         // Update "Favorite" status
-        mApiService.getNeighbours().get(index).setFavorite(neighbour.getFavorite());
+        mApiService.getNeighbours().get(index).setFavorite(mNeighbour.getFavorite());
     }
 
     @OnClick(R.id.fab)
     public void updateFabDisplay(){
         // Update "Favorite" status
-        neighbour.setFavorite(!neighbour.getFavorite());
+        mNeighbour.setFavorite(!mNeighbour.getFavorite());
         // Update display according to new value
-        if(neighbour.getFavorite()){ fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_yellow_24dp, null));}
+        if(mNeighbour.getFavorite()){ fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_yellow_24dp, null));}
         else{ fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_border_yellow_24dp, null));}
     }
 
@@ -119,6 +122,8 @@ public class InfoNeighbourActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 
     public void initializeToolbar(){
         setSupportActionBar(toolbar);
@@ -139,6 +144,6 @@ public class InfoNeighbourActivity extends AppCompatActivity {
     }
 
     public void saveFavoriteStatus(){
-        EventBus.getDefault().post(new UnselectFavoriteEvent(neighbour));
+        EventBus.getDefault().post(new UnselectFavoriteEvent(mNeighbour));
     }
 }

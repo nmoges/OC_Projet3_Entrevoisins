@@ -25,7 +25,7 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
 
     private static String TAG_NEIGHBOUR_INTENT_EXTRA = "NEIGHBOUR_EXTRA";
 
-    private ListNeighbourActivity activity;
+    private ListNeighbourActivity mActivity;
     /**
      * Create and return a new instance
      * @return @{@link NeighbourFragment}
@@ -48,9 +48,7 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
-        activity = (ListNeighbourActivity) getActivity();
-
-
+        mActivity = (ListNeighbourActivity) getActivity();
         return view;
     }
 
@@ -76,15 +74,15 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
      * Init the List of neighbours
      */
     private void initList() {
-        mNeighbours = activity.getmApiService().getNeighbours();
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, this));
+        mNeighbours = mActivity.getmApiService().getNeighbours();
+        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, this, mActivity));
     }
 
     /**
      * Update the list of FavoriteFragment
      */
     private void notifyFavoriteListChange(Neighbour neighbour){
-         activity.getMPagerAdapter().getFavoriteFragment().updateAfterDelete(neighbour);
+        mActivity.getMPagerAdapter().getFavoriteFragment().updateAfterDelete(neighbour);
     }
 
     /**
@@ -93,7 +91,7 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
      */
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
-        activity.getmApiService().deleteNeighbour(event.neighbour);
+        mActivity.getmApiService().deleteNeighbour(event.neighbour);
 
         // Update Neighbour list
         mRecyclerView.getAdapter().notifyDataSetChanged();

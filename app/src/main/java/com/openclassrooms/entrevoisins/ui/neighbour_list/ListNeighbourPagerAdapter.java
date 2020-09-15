@@ -6,10 +6,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.Observable;
 import java.util.Observer;
 
-public class ListNeighbourPagerAdapter extends FragmentPagerAdapter implements Observer {
+public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
 
-    private NeighbourFragment neighbourFragment = NeighbourFragment.newInstance();
-    private FavoriteFragment favoriteFragment = FavoriteFragment.newInstance();
+    private NeighbourFragment mNeighbourFragment = NeighbourFragment.newInstance();
+    private FavoriteFragment mFavoriteFragment = FavoriteFragment.newInstance();
 
     public ListNeighbourPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -23,10 +23,10 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter implements O
     @Override
     public Fragment getItem(int position) {
         if(position == 0){
-            return neighbourFragment;
+            return mNeighbourFragment;
         }
         else{
-            return favoriteFragment;
+            return mFavoriteFragment;
         }
     }
 
@@ -40,11 +40,7 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter implements O
     }
 
     public FavoriteFragment getFavoriteFragment(){
-        return this.favoriteFragment;
+        return this.mFavoriteFragment;
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-
-    }
 }

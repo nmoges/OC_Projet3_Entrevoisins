@@ -8,9 +8,10 @@ import java.util.List;
 
 public abstract class DummyNeighbourGenerator {
 
+    //https://picsum.photos/id/237/200/300
     public static List<Neighbour> DUMMY_NEIGHBOURS = Arrays.asList(
             new Neighbour(1, "Caroline",
-                    "https://i.pravatar.cc/150?u=a042581f4e29026704d",
+                    "https://i.picsum.photos/id/1011/5472/3648.jpg?hmac=Koo9845x2akkVzVFX3xxAc9BCkeGYA9VRVfLE4f0Zzk",
                     "Saint-Pierre-du-Mont ; 5km",
                     "+33 6 86 57 90 14",
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
@@ -23,7 +24,7 @@ public abstract class DummyNeighbourGenerator {
 
             new Neighbour(2,
                     "Jack",
-                    "https://i.pravatar.cc/150?u=a042581f4e29026704e",
+                    "https://i.picsum.photos/id/1012/3973/2639.jpg?hmac=s2eybz51lnKy2ZHkE2wsgc6S81fVD1W2NKYOSh8bzDc",
                     "Saint-Pierre-du-Mont ; 5km",
                     "+33 6 00 55 90 14",
                     "Sed eget fringilla mauris, ac rutrum mauris. Curabitur finibus felis id justo porttitor, " +
@@ -42,7 +43,7 @@ public abstract class DummyNeighbourGenerator {
 
             new Neighbour(3,
                     "Chloé",
-                    "https://i.pravatar.cc/150?u=a042581f4e29026704f",
+                    "https://i.picsum.photos/id/1027/2848/4272.jpg?hmac=EAR-f6uEqI1iZJjB6-NzoZTnmaX0oI0th3z8Y78UpKM",
                     "Saint-Pierre-du-Mont ; 6km",
                     "+33 6 86 13 12 14",
                     "Sed ultricies suscipit semper. Fusce non blandit quam. ",
@@ -51,7 +52,7 @@ public abstract class DummyNeighbourGenerator {
 
             new Neighbour(4,
                     "Vincent",
-                    "https://i.pravatar.cc/150?u=a042581f4e29026704a",
+                    "https://i.picsum.photos/id/22/4434/3729.jpg?hmac=fjZdkSMZJNFgsoDh8Qo5zdA_nSGUAWvKLyyqmEt2xs0",
                     "Saint-Pierre-du-Mont ; 11km",
                     "+33 6 10 57 90 19",
                     "Etiam quis neque egestas, consectetur est quis, laoreet augue. " +
@@ -63,7 +64,7 @@ public abstract class DummyNeighbourGenerator {
 
             new Neighbour(5,
                     "Elodie",
-                    "https://i.pravatar.cc/150?u=a042581f4e29026704b",
+                    "https://i.picsum.photos/id/399/2048/1365.jpg?hmac=Tm7jwbWj0i70u952g5yC0da-gxScdY2mQ6gjKrP8Haw",
                     "Saint-Pierre-du-Mont ; 8km",
                     "+33 6 86 57 90 14",
                     "Fusce in ligula mi. Aliquam in sagittis tellus. Suspendisse tempor, velit et " +
@@ -74,7 +75,7 @@ public abstract class DummyNeighbourGenerator {
 
             new Neighbour(6,
                     "Sylvain",
-                    "https://i.pravatar.cc/150?u=a042581f4e29026704c",
+                    "https://i.picsum.photos/id/375/5184/3456.jpg?hmac=3OUWWnSmq1CUXU7cmTnctSvhQYvyME_osftkbJynX04",
                     "Saint-Pierre-du-Mont ; 6km",
                     "+33 6 86 12 22 02",
                     "Integer pulvinar lacinia augue, a tempor ex semper eget. Nam lacinia " +
@@ -88,7 +89,7 @@ public abstract class DummyNeighbourGenerator {
 
             new Neighbour(7,
                     "Laetitia",
-                    "https://i.pravatar.cc/150?u=a042581f4e29026703d",
+                    "https://i.picsum.photos/id/628/2509/1673.jpg?hmac=TUdtbj7l4rQx5WGHuFiV_9ArjkAkt6w2Zx8zz-aFwwY",
                     "Saint-Pierre-du-Mont ; 14km",
                     "+33 6 96 57 90 01",
                     "Vestibulum non leo vel mi ultrices pellentesque. ",
@@ -97,7 +98,7 @@ public abstract class DummyNeighbourGenerator {
 
             new Neighbour(8,
                     "Dan",
-                    "https://i.pravatar.cc/150?u=a042581f4e29026703b",
+                    "https://i.picsum.photos/id/453/2048/1365.jpg?hmac=A8uxtdn4Y600Z5b2ngnn9hCXAx8sUnOVzprtDnz6DK8",
                     "Saint-Pierre-du-Mont ; 1km",
                     "+33 6 86 57 90 14",
                     "Cras non dapibus arcu. ",
@@ -106,7 +107,7 @@ public abstract class DummyNeighbourGenerator {
 
             new Neighbour(9,
                     "Joseph",
-                    "https://i.pravatar.cc/150?u=a042581f4e29026704d",
+                    "https://i.picsum.photos/id/473/5616/3744.jpg?hmac=4tP7GutJ3LGRXeprD581uaNnJJGrhF57f08OOtMm1q0",
                     "Saint-Pierre-du-Mont ; 2km",
                     "+33 6 86 57 90 14",
                     "Donec neque odio, eleifend a luctus ac, tempor non libero. " +
@@ -118,7 +119,7 @@ public abstract class DummyNeighbourGenerator {
 
             new Neighbour(10,
                     "Emma",
-                    "https://i.pravatar.cc/150?u=a042581f4e29026706d",
+                    "https://i.picsum.photos/id/64/4326/2884.jpg?hmac=9_SzX666YRpR_fOyYStXpfSiJ_edO3ghlSRnH2w09Kg",
                     "Saint-Pierre-du-Mont ; 1km",
                     "+33 6 14 71 70 18",
                     "Aliquam erat volutpat. Mauris at massa nibh. Suspendisse auctor fermentum orci, " +
@@ -135,7 +136,7 @@ public abstract class DummyNeighbourGenerator {
 
             new Neighbour(11,
                     "Patrick",
-                    "https://i.pravatar.cc/150?u=a042581f4e29026702d",
+                    "https://i.picsum.photos/id/91/3504/2336.jpg?hmac=tK6z7RReLgUlCuf4flDKeg57o6CUAbgklgLsGL0UowU",
                     "Saint-Pierre-du-Mont ; 5km",
                     "+33 6 20 40 60 80",
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce porttitor molestie " +
@@ -154,7 +155,7 @@ public abstract class DummyNeighbourGenerator {
 
             new Neighbour(12,
                     "Ludovic",
-                    "https://i.pravatar.cc/150?u=a042581f3e39026702d",
+                    "https://i.picsum.photos/id/804/6000/3376.jpg?hmac=AZ4VZdij0jPu8BKZRbiE2lEMJGGjSFv43ii3RHRugco",
                     "Saint-Pierre-du-Mont ; 5km",
                     "+33 6 00 01 10 11",
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce porttitor molestie " +

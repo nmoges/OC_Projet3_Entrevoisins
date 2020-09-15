@@ -24,17 +24,17 @@ import butterknife.OnClick;
 public class AddNeighbourActivity extends AppCompatActivity {
 
     @BindView(R.id.avatar)
-    ImageView avatar;
+    ImageView mAvatar;
     @BindView(R.id.nameLyt)
-    TextInputLayout nameInput;
+    TextInputLayout mNameInput;
     @BindView(R.id.phoneNumberLyt)
-    TextInputLayout phoneInput;
+    TextInputLayout mPhoneInput;
     @BindView(R.id.addressLyt)
-    TextInputLayout addressInput;
+    TextInputLayout mAddressInput;
     @BindView(R.id.aboutMeLyt)
-    TextInputLayout aboutMeInput;
+    TextInputLayout mAboutMeInput;
     @BindView(R.id.webSiteLyt)
-    TextInputLayout webSiteInput;
+    TextInputLayout mWebSiteInput;
 
     @BindView(R.id.create)
     MaterialButton addButton;
@@ -46,10 +46,16 @@ public class AddNeighbourActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_neighbour);
+
         ButterKnife.bind(this);
+
+        // Enable display of back button in action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         mApiService = DI.getNeighbourApiService();
+
         init();
+
     }
 
     @Override
@@ -66,8 +72,8 @@ public class AddNeighbourActivity extends AppCompatActivity {
     private void init() {
         mNeighbourImage = randomImage();
         Glide.with(this).load(mNeighbourImage).placeholder(R.drawable.ic_account)
-                .apply(RequestOptions.circleCropTransform()).into(avatar);
-        nameInput.getEditText().addTextChangedListener(new TextWatcher() {
+                .apply(RequestOptions.circleCropTransform()).into(mAvatar);
+        mNameInput.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             @Override
@@ -84,14 +90,15 @@ public class AddNeighbourActivity extends AppCompatActivity {
     void addNeighbour() {
         Neighbour neighbour = new Neighbour(
                 System.currentTimeMillis(),
-                nameInput.getEditText().getText().toString(),
+                mNameInput.getEditText().getText().toString(),
                 mNeighbourImage,
-                addressInput.getEditText().getText().toString(),
-                phoneInput.getEditText().getText().toString(),
-                aboutMeInput.getEditText().getText().toString(),
+                mAddressInput.getEditText().getText().toString(),
+                mPhoneInput.getEditText().getText().toString(),
+                mAboutMeInput.getEditText().getText().toString(),
                 false,
-                webSiteInput.getEditText().getText().toString()
+                mWebSiteInput.getEditText().getText().toString()
         );
+
         mApiService.createNeighbour(neighbour);
         finish();
     }
@@ -112,4 +119,5 @@ public class AddNeighbourActivity extends AppCompatActivity {
         Intent intent = new Intent(activity, AddNeighbourActivity.class);
         ActivityCompat.startActivity(activity, intent, null);
     }
+
 }

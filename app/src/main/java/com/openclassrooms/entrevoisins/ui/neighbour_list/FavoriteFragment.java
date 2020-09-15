@@ -24,7 +24,7 @@ public class FavoriteFragment extends Fragment implements MyFavoriteRecyclerView
     private RecyclerView mRecyclerView;
 
     // To access NeighbourApiService from fragment
-    private ListNeighbourActivity activity;
+    private ListNeighbourActivity mActivity;
 
     // Tag for intent
     private String TAG_NEIGHBOUR_INTENT_EXTRA = "NEIGHBOUR_EXTRA";
@@ -50,7 +50,7 @@ public class FavoriteFragment extends Fragment implements MyFavoriteRecyclerView
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
-        activity = (ListNeighbourActivity) getActivity();
+        mActivity = (ListNeighbourActivity) getActivity();
 
         return view;
     }
@@ -79,9 +79,9 @@ public class FavoriteFragment extends Fragment implements MyFavoriteRecyclerView
         mFavorites.clear();
 
         // Get all favorite neighbours
-        for(int i = 0; i < activity.getmApiService().getNeighbours().size(); i++){
-            if(activity.getmApiService().getNeighbours().get(i).getFavorite()){
-                mFavorites.add(activity.getmApiService().getNeighbours().get(i));
+        for(int i = 0; i < mActivity.getmApiService().getNeighbours().size(); i++){
+            if(mActivity.getmApiService().getNeighbours().get(i).getFavorite()){
+                mFavorites.add(mActivity.getmApiService().getNeighbours().get(i));
             }
         }
 
@@ -102,7 +102,7 @@ public class FavoriteFragment extends Fragment implements MyFavoriteRecyclerView
         mFavorites.remove(event.favorite);
 
         // Update status in user list
-        activity.getmApiService().updateFavoriteStatus(event.favorite);
+        mActivity.getmApiService().updateFavoriteStatus(event.favorite);
 
         // Update RecyclerView display
         try{ mRecyclerView.getAdapter().notifyDataSetChanged(); }

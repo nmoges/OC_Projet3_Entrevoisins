@@ -1,5 +1,7 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,11 +10,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import org.greenrobot.eventbus.EventBus;
+
+import java.net.SocketTimeoutException;
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,18 +27,21 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
 
     private final List<Neighbour> mNeighbours;
 
-    private ListNeighbourListener listNeighbourListener;
+    private ListNeighbourListener mListNeighbourListener;
 
-    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, ListNeighbourListener listNeighbourListener) {
+    private Context mContext;
+
+    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, ListNeighbourListener listNeighbourListener, Context context) {
         mNeighbours = items;
-        this.listNeighbourListener = listNeighbourListener;
+        this.mListNeighbourListener = listNeighbourListener;
+        this.mContext = context;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_neighbour, parent, false);
-        return new ViewHolder(view, listNeighbourListener);
+        return new ViewHolder(view, mListNeighbourListener);
     }
 
     @Override
@@ -40,10 +49,21 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         Neighbour neighbour = mNeighbours.get(position);
         holder.mNeighbourName.setText(neighbour.getName());
 
-        Glide.with(holder.mNeighbourAvatar.getContext())
+            /*RequestBuilder<Drawable> requestBuilder = Glide.with(holder.mNeighbourAvatar.getContext()).load(neighbour.getAvatarUrl());
+
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.apply(RequestOptions.circleCropTransform())
+                    .skipMemoryCache(false)
+                    .error(R.drawable.ic_account);*/
+
+           Glide.with(holder.mNeighbourAvatar.getContext())
                     .load(neighbour.getAvatarUrl())
                     .apply(RequestOptions.circleCropTransform())
+                    .error(R.drawable.ic_account)
+                    .skipMemoryCache(false)
+                    .timeout(500)
                     .into(holder.mNeighbourAvatar);
+
 
         holder.mDeleteButton.setOnClickListener((View v) -> {
                 EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));

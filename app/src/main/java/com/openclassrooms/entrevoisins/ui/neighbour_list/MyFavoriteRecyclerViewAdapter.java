@@ -22,18 +22,18 @@ public class MyFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<MyFavori
 
     private final List<Neighbour> mFavorites;
 
-    private ListFavoriteListener listFavoriteListener;
+    private ListFavoriteListener mListFavoriteListener;
 
     public MyFavoriteRecyclerViewAdapter(List<Neighbour> items, ListFavoriteListener listFavoriteListener){
         this.mFavorites = items;
-        this.listFavoriteListener = listFavoriteListener;
+        this.mListFavoriteListener = listFavoriteListener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_favorite, parent, false);
-        return new ViewHolder(view, listFavoriteListener);
+        return new ViewHolder(view, mListFavoriteListener);
     }
 
     @Override
@@ -43,8 +43,10 @@ public class MyFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<MyFavori
         holder.mFavoriteName.setText(favorite.getName());
         Glide.with(holder.mFavoriteAvatar.getContext())
                 .load(favorite.getAvatarUrl())
-                .apply(RequestOptions.centerCropTransform())
-                .apply(RequestOptions.timeoutOf(2000))
+                .apply(RequestOptions.circleCropTransform())
+                .error(R.drawable.ic_account)
+                .skipMemoryCache(false)
+                .timeout(500)
                 .into(holder.mFavoriteAvatar);
 
         holder.mFavoriteButton.setOnClickListener((View v) -> {
