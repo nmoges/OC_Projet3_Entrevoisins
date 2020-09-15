@@ -21,4 +21,5 @@
         <!--<item name="colorControlNormal">#FFFFFF</item>-->
         <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_white_24dp</item>
     </style>
+
 </resources>

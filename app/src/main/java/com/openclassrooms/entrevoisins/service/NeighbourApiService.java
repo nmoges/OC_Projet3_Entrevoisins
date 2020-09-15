@@ -33,4 +33,9 @@ public interface NeighbourApiService {
      */
     void updateFavoriteStatus(Neighbour neighbour);
 
+    /**
+     * Update modified fields of an existing Neighbour"
+     * @param neighbour
+     */
+    void updateDataNeighbour(Neighbour neighbour);
 }

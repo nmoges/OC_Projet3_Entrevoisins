@@ -86,7 +86,7 @@ public class FavoriteFragment extends Fragment implements MyFavoriteRecyclerView
         }
 
         // Initialize adapter display
-        mRecyclerView.setAdapter(new MyFavoriteRecyclerViewAdapter(mFavorites, this));
+        mRecyclerView.setAdapter(new MyFavoriteRecyclerViewAdapter(mFavorites, this, getContext()));
     }
 
     public void updateAfterDelete(Neighbour neighbour){

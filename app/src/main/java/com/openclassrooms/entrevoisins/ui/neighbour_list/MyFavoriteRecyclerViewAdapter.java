@@ -1,5 +1,6 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,9 +25,12 @@ public class MyFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<MyFavori
 
     private ListFavoriteListener mListFavoriteListener;
 
-    public MyFavoriteRecyclerViewAdapter(List<Neighbour> items, ListFavoriteListener listFavoriteListener){
+    private Context mContext;
+
+    public MyFavoriteRecyclerViewAdapter(List<Neighbour> items, ListFavoriteListener listFavoriteListener, Context context){
         this.mFavorites = items;
         this.mListFavoriteListener = listFavoriteListener;
+        this.mContext = context;
     }
 
     @Override
@@ -44,9 +48,9 @@ public class MyFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<MyFavori
         Glide.with(holder.mFavoriteAvatar.getContext())
                 .load(favorite.getAvatarUrl())
                 .apply(RequestOptions.circleCropTransform())
+                .placeholder(mContext.getResources().getDrawable(R.drawable.ic_account, null))
                 .error(R.drawable.ic_account)
                 .skipMemoryCache(false)
-                .timeout(500)
                 .into(holder.mFavoriteAvatar);
 
         holder.mFavoriteButton.setOnClickListener((View v) -> {

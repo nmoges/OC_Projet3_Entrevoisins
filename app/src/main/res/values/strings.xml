@@ -20,6 +20,7 @@
 
     <!-- fragment_favorite_list.xml -->
     <string name="no_favorites">No favorites</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- menu_info_neighbour.xml -->
+    <string name="menu_info_edit_title">Edit</string>
 </resources>

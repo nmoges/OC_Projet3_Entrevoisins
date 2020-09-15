@@ -1,5 +1,6 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +36,7 @@ public class InfoNeighbourActivity extends AppCompatActivity {
     @BindView(R.id.text_about_me_neighbour) TextView textAboutMeNeighbour;
 
     private static String TAG_NEIGHBOUR_INTENT_EXTRA = "NEIGHBOUR_EXTRA";
+    private static int TAG_REQUEST_CODE_RESULTS = 1;
     private Neighbour mNeighbour;
 
     private NeighbourApiService mApiService;
@@ -87,8 +89,8 @@ public class InfoNeighbourActivity extends AppCompatActivity {
         Glide.with(InfoNeighbourActivity.this)
                 .load(mNeighbour.getAvatarUrl())
                 .skipMemoryCache(false)
-                .timeout(500)
                 .apply(RequestOptions.centerCropTransform())
+                .skipMemoryCache(false)
                 .into(avatarNeighbour);
 
         // FloatingButton status
@@ -114,12 +116,23 @@ public class InfoNeighbourActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_info_neighbour, menu);
+        return true;
+    }
+    @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if(item.getItemId() == android.R.id.home){ // Back arrow
             // Save new Favorite status for current User before ending the activity
             saveFavoriteStatus();
             finish();
         }
+        if(item.getItemId() == R.id.edit_item_menu){ // Edit contact
+            Intent launchActivityInfo = new Intent(this, AddNeighbourActivity.class);
+            launchActivityInfo.putExtra(TAG_NEIGHBOUR_INTENT_EXTRA, mNeighbour);
+            startActivityForResult(launchActivityInfo, TAG_REQUEST_CODE_RESULTS);
+        }
+        
         return super.onOptionsItemSelected(item);
     }
 
@@ -141,6 +154,32 @@ public class InfoNeighbourActivity extends AppCompatActivity {
         // Save new Favorite status for current User before ending the activity
         saveFavoriteStatus();
         super.onBackPressed();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == TAG_REQUEST_CODE_RESULTS){
+            if(resultCode  == Activity.RESULT_OK){
+                // Update mNeighbour fields
+                Neighbour newNeighbour = (Neighbour) data.getSerializableExtra("UPDATE");
+
+                mNeighbour.setName(newNeighbour.getName());
+                mNeighbour.setName(newNeighbour.getName());
+                mNeighbour.setAddress(newNeighbour.getAddress());
+                mNeighbour.setPhoneNumber(newNeighbour.getPhoneNumber());
+                mNeighbour.setWebSite(newNeighbour.getWebSite());
+                mNeighbour.setAboutMe(newNeighbour.getAboutMe());
+
+                // Update display
+                initializeInfoToDisplay();
+
+                // Update data in Neighbour list
+                mApiService.updateDataNeighbour(mNeighbour);
+            }
+        }
     }
 
     public void saveFavoriteStatus(){

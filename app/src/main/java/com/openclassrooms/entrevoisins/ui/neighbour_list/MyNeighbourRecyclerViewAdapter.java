@@ -11,8 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.ViewTarget;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
@@ -49,21 +51,15 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         Neighbour neighbour = mNeighbours.get(position);
         holder.mNeighbourName.setText(neighbour.getName());
 
-            /*RequestBuilder<Drawable> requestBuilder = Glide.with(holder.mNeighbourAvatar.getContext()).load(neighbour.getAvatarUrl());
-
-            RequestOptions requestOptions = new RequestOptions();
-            requestOptions.apply(RequestOptions.circleCropTransform())
-                    .skipMemoryCache(false)
-                    .error(R.drawable.ic_account);*/
-
-           Glide.with(holder.mNeighbourAvatar.getContext())
+        Glide.with(holder.mNeighbourAvatar.getContext())
                     .load(neighbour.getAvatarUrl())
                     .apply(RequestOptions.circleCropTransform())
+                    .placeholder(mContext.getResources().getDrawable(R.drawable.ic_account, null))
                     .error(R.drawable.ic_account)
                     .skipMemoryCache(false)
-                    .timeout(500)
                     .into(holder.mNeighbourAvatar);
 
+    //    mNeighbours.get(position).setAvatarDrawable(holder.mNeighbourAvatar.getDrawable());
 
         holder.mDeleteButton.setOnClickListener((View v) -> {
                 EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));

@@ -1,9 +1,11 @@
 package com.openclassrooms.entrevoisins.service;
 
 import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.util.NeighbourComparator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class DummyNeighbourGenerator {
@@ -174,6 +176,13 @@ public abstract class DummyNeighbourGenerator {
     );
 
     static List<Neighbour> generateNeighbours() {
-        return new ArrayList<>(DUMMY_NEIGHBOURS);
+
+        NeighbourComparator comparator = new NeighbourComparator();
+        ArrayList<Neighbour> listNeighbours = new ArrayList<>(DUMMY_NEIGHBOURS);
+
+        // Organize ArrayList in the lexicographic order using custom comparator
+        Collections.sort(listNeighbours, comparator);
+
+        return listNeighbours;
     }
 }

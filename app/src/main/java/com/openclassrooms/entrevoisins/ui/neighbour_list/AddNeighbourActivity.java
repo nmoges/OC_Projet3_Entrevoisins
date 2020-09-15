@@ -1,5 +1,6 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputLayout;
@@ -42,6 +43,10 @@ public class AddNeighbourActivity extends AppCompatActivity {
     private NeighbourApiService mApiService;
     private String mNeighbourImage;
 
+    // Parameters to recover data from existing Neighbour
+    private static String TAG_NEIGHBOUR_INTENT_EXTRA = "NEIGHBOUR_EXTRA";
+    private Neighbour neighbourToModify;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +61,10 @@ public class AddNeighbourActivity extends AppCompatActivity {
 
         init();
 
+        Intent infoNeighbour = getIntent();
+        if(infoNeighbour.hasExtra(TAG_NEIGHBOUR_INTENT_EXTRA)){
+            restoreNeighbourInfo(infoNeighbour);
+        }
     }
 
     @Override
@@ -88,18 +97,35 @@ public class AddNeighbourActivity extends AppCompatActivity {
 
     @OnClick(R.id.create)
     void addNeighbour() {
-        Neighbour neighbour = new Neighbour(
-                System.currentTimeMillis(),
-                mNameInput.getEditText().getText().toString(),
-                mNeighbourImage,
-                mAddressInput.getEditText().getText().toString(),
-                mPhoneInput.getEditText().getText().toString(),
-                mAboutMeInput.getEditText().getText().toString(),
-                false,
-                mWebSiteInput.getEditText().getText().toString()
-        );
+        if(neighbourToModify == null){
+            // Case New Neighbour (neighbourToModify not initialized)
+            Neighbour neighbour = new Neighbour(
+                    System.currentTimeMillis(),
+                    mNameInput.getEditText().getText().toString(),
+                    mNeighbourImage,
+                    mAddressInput.getEditText().getText().toString(),
+                    mPhoneInput.getEditText().getText().toString(),
+                    mAboutMeInput.getEditText().getText().toString(),
+                    false,
+                    mWebSiteInput.getEditText().getText().toString()
+            );
+            // Added to the list
+            mApiService.createNeighbour(neighbour);
+        }
+        else{
+            // Case Modification existing Neighbour (neighbourToModify initialized)
 
-        mApiService.createNeighbour(neighbour);
+            // Store updates
+            neighbourToModify.setName(mNameInput.getEditText().getText().toString());
+            neighbourToModify.setPhoneNumber(mPhoneInput.getEditText().getText().toString());
+            neighbourToModify.setAddress(mAddressInput.getEditText().getText().toString());
+            neighbourToModify.setAboutMe(mAboutMeInput.getEditText().getText().toString());
+            neighbourToModify.setWebSite(mWebSiteInput.getEditText().getText().toString());
+
+            // Send updates to InfoNeighbourActivity
+            Intent updateIntent = new Intent();
+            setResult(Activity.RESULT_OK, updateIntent);
+        }
         finish();
     }
 
@@ -118,6 +144,31 @@ public class AddNeighbourActivity extends AppCompatActivity {
     public static void navigate(FragmentActivity activity) {
         Intent intent = new Intent(activity, AddNeighbourActivity.class);
         ActivityCompat.startActivity(activity, intent, null);
+    }
+
+    public void restoreNeighbourInfo(Intent infoNeighbour){
+
+        neighbourToModify = (Neighbour) infoNeighbour.getSerializableExtra(TAG_NEIGHBOUR_INTENT_EXTRA);
+
+        try{
+
+            mNameInput.getEditText().setText(neighbourToModify.getName(), null);
+            mPhoneInput.getEditText().setText(neighbourToModify.getPhoneNumber(), null);
+            mAddressInput.getEditText().setText(neighbourToModify.getAddress(), null);
+            mAboutMeInput.getEditText().setText(neighbourToModify.getAboutMe(), null);
+            mWebSiteInput.getEditText().setText(neighbourToModify.getWebSite(), null);
+
+            Glide.with(this)
+                    .load(neighbourToModify.getAvatarUrl())
+                    .apply(RequestOptions.circleCropTransform())
+                    .placeholder(getResources().getDrawable(R.drawable.ic_account, null))
+                    .error(R.drawable.ic_account)
+                    .skipMemoryCache(false)
+                    .into(mAvatar);
+
+        } catch(NullPointerException exception){
+            exception.printStackTrace();
+        }
     }
 
 }

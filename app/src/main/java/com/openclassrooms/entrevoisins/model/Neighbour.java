@@ -1,5 +1,7 @@
 package com.openclassrooms.entrevoisins.model;
 
+import android.graphics.drawable.Drawable;
+
 import java.io.Serializable;
 import java.util.Objects;
 
