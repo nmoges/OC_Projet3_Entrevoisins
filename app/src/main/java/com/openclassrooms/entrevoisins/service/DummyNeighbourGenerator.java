@@ -175,7 +175,7 @@ public abstract class DummyNeighbourGenerator {
                     "www.facebook.fr/ludovic")
     );
 
-    static List<Neighbour> generateNeighbours() {
+    public static List<Neighbour> generateNeighbours() {
 
         NeighbourComparator comparator = new NeighbourComparator();
         ArrayList<Neighbour> listNeighbours = new ArrayList<>(DUMMY_NEIGHBOURS);

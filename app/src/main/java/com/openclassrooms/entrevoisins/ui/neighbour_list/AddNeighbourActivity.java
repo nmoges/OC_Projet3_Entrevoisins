@@ -21,6 +21,7 @@ import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import android.support.v7.widget.Toolbar;
 
 public class AddNeighbourActivity extends AppCompatActivity {
 
@@ -124,6 +125,7 @@ public class AddNeighbourActivity extends AppCompatActivity {
 
             // Send updates to InfoNeighbourActivity
             Intent updateIntent = new Intent();
+            updateIntent.putExtra("UPDATE", neighbourToModify);
             setResult(Activity.RESULT_OK, updateIntent);
         }
         finish();
@@ -165,6 +167,7 @@ public class AddNeighbourActivity extends AppCompatActivity {
                     .error(R.drawable.ic_account)
                     .skipMemoryCache(false)
                     .into(mAvatar);
+
 
         } catch(NullPointerException exception){
             exception.printStackTrace();

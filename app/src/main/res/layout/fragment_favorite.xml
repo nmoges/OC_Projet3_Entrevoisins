@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:id="@+id/fragment_favorite">
 
     <ImageView
         android:id="@+id/item_favorite_list_avatar"

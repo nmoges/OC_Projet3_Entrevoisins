@@ -2,6 +2,8 @@ package com.openclassrooms.entrevoisins.service;
 
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.util.NeighbourComparator;
+
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -65,7 +67,9 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
     @Override
     public void updateDataNeighbour(Neighbour neighbour){
         int index = neighbours.indexOf(neighbour);
+        // Remove old version of Neighbour
         neighbours.remove(index);
-        neighbours.add(index, neighbour);
+        // Repositioning new version of Neighbour in list
+        createNeighbour(neighbour);
     }
 }
