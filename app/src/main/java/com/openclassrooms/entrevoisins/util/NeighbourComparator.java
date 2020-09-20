@@ -10,9 +10,9 @@ public class NeighbourComparator implements Comparator<Neighbour> {
      * This class is a custom comparator used to determine a
      * lexicographic order between two Neighbour according to their name
      *
-     * @param firstNeighbour
-     * @param secondNeighbour
-     * @return
+     * @param firstNeighbour : Neighbour
+     * @param secondNeighbour : Neighbour
+     * @return : int
      */
     @Override
     public int compare(Neighbour firstNeighbour, Neighbour secondNeighbour){

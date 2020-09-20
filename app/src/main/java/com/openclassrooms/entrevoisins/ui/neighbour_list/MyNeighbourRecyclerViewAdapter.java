@@ -1,7 +1,7 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,17 +10,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestBuilder;
-import com.bumptech.glide.RequestManager;
-import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.ViewTarget;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import org.greenrobot.eventbus.EventBus;
-
-import java.net.SocketTimeoutException;
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +33,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         this.mContext = context;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -59,8 +54,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                     .skipMemoryCache(false)
                     .into(holder.mNeighbourAvatar);
 
-    //    mNeighbours.get(position).setAvatarDrawable(holder.mNeighbourAvatar.getDrawable());
-
         holder.mDeleteButton.setOnClickListener((View v) -> {
                 EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
             }
@@ -72,7 +65,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         return mNeighbours.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.item_list_avatar)
         public ImageView mNeighbourAvatar;
         @BindView(R.id.item_list_name)
@@ -80,9 +73,9 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         @BindView(R.id.item_list_delete_button)
         public ImageButton mDeleteButton;
 
-        public ListNeighbourListener listNeighbourListener;
+        private ListNeighbourListener listNeighbourListener;
 
-        public ViewHolder(View view, ListNeighbourListener listNeighbourListener) {
+        private ViewHolder(View view, ListNeighbourListener listNeighbourListener) {
             super(view);
             ButterKnife.bind(this, view);
 

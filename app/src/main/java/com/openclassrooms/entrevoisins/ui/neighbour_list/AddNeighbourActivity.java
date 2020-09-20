@@ -22,9 +22,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import android.support.v7.widget.Toolbar;
+import java.util.Objects;
 
 public class AddNeighbourActivity extends AppCompatActivity {
 
+    @BindView(R.id.toolbar_activity_add)
+    Toolbar toolbar;
     @BindView(R.id.avatar)
     ImageView mAvatar;
     @BindView(R.id.nameLyt)
@@ -55,60 +58,82 @@ public class AddNeighbourActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        // Enable display of back button in action bar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // Initialize toolbar
+        initializeToolbar();
 
         mApiService = DI.getNeighbourApiService();
 
         init();
 
         Intent infoNeighbour = getIntent();
-        if(infoNeighbour.hasExtra(TAG_NEIGHBOUR_INTENT_EXTRA)){
+        if(infoNeighbour.hasExtra(TAG_NEIGHBOUR_INTENT_EXTRA)){ // Modify existing Neighbour
+            // Update edit fields
             restoreNeighbourInfo(infoNeighbour);
+            // Update toolbar
+            Objects.requireNonNull(getSupportActionBar()).setTitle(getResources().getString(R.string.modify_neighbour));
+        }
+        else{ // Create New Neighbour
+            Objects.requireNonNull(getSupportActionBar()).setTitle(getResources().getString(R.string.new_neighbour));
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home : {
-                finish();
-                return true;
-            }
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void init() {
-        mNeighbourImage = randomImage();
-        Glide.with(this).load(mNeighbourImage).placeholder(R.drawable.ic_account)
-                .apply(RequestOptions.circleCropTransform()).into(mAvatar);
-        mNameInput.getEditText().addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
-            @Override
-            public void afterTextChanged(Editable s) {
-                addButton.setEnabled(s.length() > 0);
-            }
-        });
+    public void initializeToolbar(){
+        setSupportActionBar(toolbar);
+        try{
+            Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+            toolbar.setPopupTheme(R.style.BackArrowTheme);
+        } catch (NullPointerException exception){
+            exception.printStackTrace();
+        }
+
 
     }
 
+    private void init() {
+        mNeighbourImage = randomImage();
+
+        Glide.with(this).load(mNeighbourImage).placeholder(R.drawable.ic_account)
+                .apply(RequestOptions.circleCropTransform()).into(mAvatar);
+
+        Objects.requireNonNull(mNameInput.getEditText()).addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) { }
+                @Override
+                public void afterTextChanged(Editable s) {
+                    addButton.setEnabled(s.length() > 0);
+                }
+        });
+    }
+
+    /**
+     * This methods does :
+     *      - add a new Neighbour in the Neighbour list
+     *      - modify an existing Neighbour from the Neighbour list
+     */
     @OnClick(R.id.create)
     void addNeighbour() {
         if(neighbourToModify == null){
             // Case New Neighbour (neighbourToModify not initialized)
             Neighbour neighbour = new Neighbour(
                     System.currentTimeMillis(),
-                    mNameInput.getEditText().getText().toString(),
+                    Objects.requireNonNull(mNameInput.getEditText()).getText().toString(),
                     mNeighbourImage,
-                    mAddressInput.getEditText().getText().toString(),
-                    mPhoneInput.getEditText().getText().toString(),
-                    mAboutMeInput.getEditText().getText().toString(),
+                    Objects.requireNonNull(mAddressInput.getEditText()).getText().toString(),
+                    Objects.requireNonNull(mPhoneInput.getEditText()).getText().toString(),
+                    Objects.requireNonNull(mAboutMeInput.getEditText()).getText().toString(),
                     false,
-                    mWebSiteInput.getEditText().getText().toString()
+                    Objects.requireNonNull(mWebSiteInput.getEditText()).getText().toString()
             );
             // Added to the list
             mApiService.createNeighbour(neighbour);
@@ -117,11 +142,11 @@ public class AddNeighbourActivity extends AppCompatActivity {
             // Case Modification existing Neighbour (neighbourToModify initialized)
 
             // Store updates
-            neighbourToModify.setName(mNameInput.getEditText().getText().toString());
-            neighbourToModify.setPhoneNumber(mPhoneInput.getEditText().getText().toString());
-            neighbourToModify.setAddress(mAddressInput.getEditText().getText().toString());
-            neighbourToModify.setAboutMe(mAboutMeInput.getEditText().getText().toString());
-            neighbourToModify.setWebSite(mWebSiteInput.getEditText().getText().toString());
+            neighbourToModify.setName(Objects.requireNonNull(mNameInput.getEditText()).getText().toString());
+            neighbourToModify.setPhoneNumber(Objects.requireNonNull(mPhoneInput.getEditText()).getText().toString());
+            neighbourToModify.setAddress(Objects.requireNonNull(mAddressInput.getEditText()).getText().toString());
+            neighbourToModify.setAboutMe(Objects.requireNonNull(mAboutMeInput.getEditText()).getText().toString());
+            neighbourToModify.setWebSite(Objects.requireNonNull(mWebSiteInput.getEditText()).getText().toString());
 
             // Send updates to InfoNeighbourActivity
             Intent updateIntent = new Intent();
@@ -141,7 +166,7 @@ public class AddNeighbourActivity extends AppCompatActivity {
 
     /**
      * Used to navigate to this activity
-     * @param activity
+     * @param activity : FragmentActivity
      */
     public static void navigate(FragmentActivity activity) {
         Intent intent = new Intent(activity, AddNeighbourActivity.class);
@@ -152,26 +177,19 @@ public class AddNeighbourActivity extends AppCompatActivity {
 
         neighbourToModify = (Neighbour) infoNeighbour.getSerializableExtra(TAG_NEIGHBOUR_INTENT_EXTRA);
 
-        try{
+        Objects.requireNonNull(mNameInput.getEditText()).setText(neighbourToModify.getName(), null);
+        Objects.requireNonNull(mPhoneInput.getEditText()).setText(neighbourToModify.getPhoneNumber(), null);
+        Objects.requireNonNull(mAddressInput.getEditText()).setText(neighbourToModify.getAddress(), null);
+        Objects.requireNonNull(mAboutMeInput.getEditText()).setText(neighbourToModify.getAboutMe(), null);
+        Objects.requireNonNull(mWebSiteInput.getEditText()).setText(neighbourToModify.getWebSite(), null);
 
-            mNameInput.getEditText().setText(neighbourToModify.getName(), null);
-            mPhoneInput.getEditText().setText(neighbourToModify.getPhoneNumber(), null);
-            mAddressInput.getEditText().setText(neighbourToModify.getAddress(), null);
-            mAboutMeInput.getEditText().setText(neighbourToModify.getAboutMe(), null);
-            mWebSiteInput.getEditText().setText(neighbourToModify.getWebSite(), null);
-
-            Glide.with(this)
-                    .load(neighbourToModify.getAvatarUrl())
-                    .apply(RequestOptions.circleCropTransform())
-                    .placeholder(getResources().getDrawable(R.drawable.ic_account, null))
-                    .error(R.drawable.ic_account)
-                    .skipMemoryCache(false)
-                    .into(mAvatar);
-
-
-        } catch(NullPointerException exception){
-            exception.printStackTrace();
-        }
+        Glide.with(this)
+                .load(neighbourToModify.getAvatarUrl())
+                .apply(RequestOptions.circleCropTransform())
+                .placeholder(getResources().getDrawable(R.drawable.ic_account, null))
+                .error(R.drawable.ic_account)
+                .skipMemoryCache(false)
+                .into(mAvatar);
     }
 
 }

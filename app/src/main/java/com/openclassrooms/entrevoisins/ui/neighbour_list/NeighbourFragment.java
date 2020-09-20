@@ -16,16 +16,17 @@ import com.openclassrooms.entrevoisins.model.Neighbour;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import java.util.List;
+import java.util.Objects;
 
 public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerViewAdapter.ListNeighbourListener {
 
-    //private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
 
     private static String TAG_NEIGHBOUR_INTENT_EXTRA = "NEIGHBOUR_EXTRA";
 
     private ListNeighbourActivity mActivity;
+
     /**
      * Create and return a new instance
      * @return @{@link NeighbourFragment}
@@ -46,7 +47,7 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
         Context context = view.getContext();
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getContext()), DividerItemDecoration.VERTICAL));
 
         mActivity = (ListNeighbourActivity) getActivity();
         return view;
@@ -80,6 +81,7 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
 
     /**
      * Update the list of FavoriteFragment
+     * @param neighbour : Neighbour
      */
     private void notifyFavoriteListChange(Neighbour neighbour){
         mActivity.getMPagerAdapter().getFavoriteFragment().updateAfterDelete(neighbour);
@@ -87,14 +89,14 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
 
     /**
      * Fired if the user clicks on a delete button
-     * @param event
+     * @param event : DeleteNeighbourEvent
      */
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
         mActivity.getmApiService().deleteNeighbour(event.neighbour);
 
         // Update Neighbour list
-        mRecyclerView.getAdapter().notifyDataSetChanged();
+        Objects.requireNonNull(mRecyclerView.getAdapter()).notifyDataSetChanged();
 
         // If deleted Neighbour was a "Favorite", update "Favorite" list
         if(event.neighbour.getFavorite()){notifyFavoriteListChange(event.neighbour);}
@@ -102,7 +104,7 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
 
     /**
      * MyNeighbourRecyclerViewAdapter.ListNeighbourListener interface implementation
-     * @param position
+     * @param position : int
      */
     @Override
     public void onClickItemNeighbour(int position) {

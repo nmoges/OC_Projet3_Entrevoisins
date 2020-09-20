@@ -33,6 +33,7 @@ public class MyFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<MyFavori
         this.mContext = context;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View view = LayoutInflater.from(parent.getContext())
@@ -65,7 +66,7 @@ public class MyFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<MyFavori
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         @BindView(R.id.item_favorite_list_avatar)
         public ImageView mFavoriteAvatar;
@@ -74,9 +75,9 @@ public class MyFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<MyFavori
         @BindView(R.id.item_list_favorite_button)
         public ImageButton mFavoriteButton;
 
-        public ListFavoriteListener listFavoriteListener;
+        private ListFavoriteListener listFavoriteListener;
 
-        public ViewHolder(View view, ListFavoriteListener listFavoriteListener){
+        private ViewHolder(View view, ListFavoriteListener listFavoriteListener){
             super(view);
             ButterKnife.bind(this, view);
 

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -20,22 +19,31 @@ import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-
 public class InfoNeighbourActivity extends AppCompatActivity {
 
-    @BindView(R.id.toolbar_activity_info) Toolbar toolbar;
-    @BindView(R.id.fab) FloatingActionButton fab;
-    @BindView(R.id.name_on_avatar_neighbour) TextView nameOnAvatar;
-    @BindView(R.id.title_name_neighbour) TextView titleNameNeighbour;
-    @BindView(R.id.location_neighbour) TextView locationNeighbour;
-    @BindView(R.id.phone_neighbour) TextView phoneNeighbour;
-    @BindView(R.id.website_neighbour) TextView websiteNeighbour;
-    @BindView(R.id.avatar_neighbour) ImageView avatarNeighbour;
-    @BindView(R.id.text_about_me_neighbour) TextView textAboutMeNeighbour;
+    @BindView(R.id.toolbar_activity_info)
+    Toolbar toolbar;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+    @BindView(R.id.name_on_avatar_neighbour)
+    TextView nameOnAvatar;
+    @BindView(R.id.title_name_neighbour)
+    TextView titleNameNeighbour;
+    @BindView(R.id.location_neighbour)
+    TextView locationNeighbour;
+    @BindView(R.id.phone_neighbour)
+    TextView phoneNeighbour;
+    @BindView(R.id.website_neighbour)
+    TextView websiteNeighbour;
+    @BindView(R.id.avatar_neighbour)
+    ImageView avatarNeighbour;
+    @BindView(R.id.text_about_me_neighbour)
+    TextView textAboutMeNeighbour;
 
     private static String TAG_NEIGHBOUR_INTENT_EXTRA = "NEIGHBOUR_EXTRA";
     private static int TAG_REQUEST_CODE_RESULTS = 1;
@@ -62,7 +70,6 @@ public class InfoNeighbourActivity extends AppCompatActivity {
             mNeighbour = (Neighbour) infoNeighbour.getSerializableExtra(TAG_NEIGHBOUR_INTENT_EXTRA);
             initializeInfoToDisplay();
         }
-
     }
 
     @Override
@@ -138,17 +145,12 @@ public class InfoNeighbourActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-
     public void initializeToolbar(){
         setSupportActionBar(toolbar);
-        try{
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("");
-            toolbar.setPopupTheme(R.style.BackArrowTheme);
-        } catch(NullPointerException exception){
-            exception.printStackTrace();
-        }
+
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
+        toolbar.setPopupTheme(R.style.BackArrowTheme);
     }
 
     @Override

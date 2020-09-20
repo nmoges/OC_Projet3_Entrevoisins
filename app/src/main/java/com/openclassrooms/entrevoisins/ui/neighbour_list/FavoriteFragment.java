@@ -17,6 +17,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class FavoriteFragment extends Fragment implements MyFavoriteRecyclerViewAdapter.ListFavoriteListener {
 
@@ -28,6 +29,7 @@ public class FavoriteFragment extends Fragment implements MyFavoriteRecyclerView
 
     // Tag for intent
     private String TAG_NEIGHBOUR_INTENT_EXTRA = "NEIGHBOUR_EXTRA";
+
     /**
      * Create and return a new instance
      * @return @{@link FavoriteFragment}
@@ -48,13 +50,12 @@ public class FavoriteFragment extends Fragment implements MyFavoriteRecyclerView
         Context context = view.getContext();
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getContext()), DividerItemDecoration.VERTICAL));
 
         mActivity = (ListNeighbourActivity) getActivity();
 
         return view;
     }
-
 
     @Override
     public void onStart(){
@@ -89,13 +90,22 @@ public class FavoriteFragment extends Fragment implements MyFavoriteRecyclerView
         mRecyclerView.setAdapter(new MyFavoriteRecyclerViewAdapter(mFavorites, this, getContext()));
     }
 
+    /**
+     * This method is called when a "Favorite" Neighbour is deleted in the Neighbour list.
+     * This Neighbour must be deleted in the Favorite list also.
+     * @param neighbour : Neighbour
+     */
     public void updateAfterDelete(Neighbour neighbour){
 
         mFavorites.remove(neighbour);
         // Update RecyclerView display
-        mRecyclerView.getAdapter().notifyDataSetChanged();
+        Objects.requireNonNull(mRecyclerView.getAdapter()).notifyDataSetChanged();
     }
 
+    /**
+     * Updates "Favorite" list displayed after an UnselectFavoriteEvent event.
+     * @param event : UnselectFavoriteEvent
+     */
     @Subscribe
     public void onUnselectFavorite(UnselectFavoriteEvent event){
         // Remove from displayed favorite list
@@ -105,14 +115,15 @@ public class FavoriteFragment extends Fragment implements MyFavoriteRecyclerView
         mActivity.getmApiService().updateFavoriteStatus(event.favorite);
 
         // Update RecyclerView display
-        try{ mRecyclerView.getAdapter().notifyDataSetChanged(); }
+        try{ Objects.requireNonNull(mRecyclerView.getAdapter()).notifyDataSetChanged(); }
         catch (NullPointerException exception){ exception.printStackTrace(); }
     }
 
-    /**
-     * Update background display depending of if mFavorites list contains elements or not.
-     */
 
+    /**
+     * Launches InfoNeighbourActitivy from "Favorite" clicked item
+     * @param position : int
+     */
     @Override
     public void onClickItemFavorite(int position) {
         Intent launchActivityInfo = new Intent(getActivity(), InfoNeighbourActivity.class);

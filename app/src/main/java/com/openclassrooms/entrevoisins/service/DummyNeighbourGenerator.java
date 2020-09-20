@@ -2,7 +2,6 @@ package com.openclassrooms.entrevoisins.service;
 
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.util.NeighbourComparator;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,7 +9,6 @@ import java.util.List;
 
 public abstract class DummyNeighbourGenerator {
 
-    //https://picsum.photos/id/237/200/300
     public static List<Neighbour> DUMMY_NEIGHBOURS = Arrays.asList(
             new Neighbour(1, "Caroline",
                     "https://i.picsum.photos/id/1011/5472/3648.jpg?hmac=Koo9845x2akkVzVFX3xxAc9BCkeGYA9VRVfLE4f0Zzk",
@@ -49,7 +47,7 @@ public abstract class DummyNeighbourGenerator {
                     "Saint-Pierre-du-Mont ; 6km",
                     "+33 6 86 13 12 14",
                     "Sed ultricies suscipit semper. Fusce non blandit quam. ",
-                    true,
+                    false,
                     "www.facebook.fr/chloe"),
 
             new Neighbour(4,
@@ -86,7 +84,7 @@ public abstract class DummyNeighbourGenerator {
                             "Nullam arcu purus, cursus a sollicitudin eu, lobortis vitae est. Sed sodales sit " +
                             "amet magna nec finibus. Nulla pellentesque, justo ut bibendum mollis, urna diam " +
                             "hendrerit dolor, non gravida urna quam id eros. ",
-                    true,
+                    false,
                     "www.facebook.fr/sylvain"),
 
             new Neighbour(7,
@@ -116,7 +114,7 @@ public abstract class DummyNeighbourGenerator {
                             "Nunc ullamcorper, erat non viverra feugiat, massa odio facilisis ligula, " +
                             "ut pharetra risus libero eget elit. Nulla malesuada, purus eu malesuada malesuada, est " +
                             "purus ullamcorper ipsum, quis congue velit mi sed lorem.",
-                    true,
+                    false,
                     "www.facebook.fr/joseph"),
 
             new Neighbour(10,
@@ -133,7 +131,7 @@ public abstract class DummyNeighbourGenerator {
                             "eleifend justo iaculis, ac ullamcorper velit consectetur. Aliquam vitae elit ac ante ultricies aliquet " +
                             "vel at felis. Suspendisse ac placerat odio. Cras non dapibus arcu. Fusce pharetra nisi at orci rhoncus, " +
                             "vitae tristique nibh euismod.",
-                    true,
+                    false,
                     "www.facebook.fr/emma"),
 
             new Neighbour(11,
@@ -171,7 +169,7 @@ public abstract class DummyNeighbourGenerator {
                     "at nulla finibus sollicitudin. Nunc dolor mauris, blandit id ullamcorper vel, lacinia ac nisi. Vestibulum et sapien tempor, " +
                     "egestas lorem vitae, faucibus urna. Duis id odio massa. Class aptent taciti sociosqu ad litora torquent per conubia nostra, " +
                     "per inceptos himenaeos.",
-                    true,
+                    false,
                     "www.facebook.fr/ludovic")
     );
 

@@ -2,8 +2,6 @@ package com.openclassrooms.entrevoisins.service;
 
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.util.NeighbourComparator;
-
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -32,7 +30,7 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
 
     /**
      * {@inheritDoc}
-     * @param neighbour
+     * @param neighbour: Neighbour
      */
     @Override
     public void createNeighbour(Neighbour neighbour) {
@@ -55,20 +53,27 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
 
         // If not found, item must be positioned at the end
         if(!found){ neighbours.add(neighbour); }
-
     }
 
+    /**
+     * {@inheritDoc}
+     * @param neighbour : Neighbour
+     */
     @Override
     public void updateFavoriteStatus(Neighbour neighbour){
         int index = neighbours.indexOf(neighbour);
         neighbours.get(index).setFavorite(!neighbours.get(index).getFavorite());
     }
 
+    /**
+     * {@inheritDoc}
+     * @param neighbour : Neighbour
+     */
     @Override
     public void updateDataNeighbour(Neighbour neighbour){
         int index = neighbours.indexOf(neighbour);
         // Remove old version of Neighbour
-        neighbours.remove(index);
+        neighbours.remove(neighbour);
         // Repositioning new version of Neighbour in list
         createNeighbour(neighbour);
     }

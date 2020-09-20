@@ -58,6 +58,8 @@ public class ListNeighbourActivity extends AppCompatActivity {
         return this.mPagerAdapter;
     }
 
-    public NeighbourApiService getmApiService(){ return this.mApiService; }
+    public NeighbourApiService getmApiService(){
+        return this.mApiService;
+    }
 
 }
