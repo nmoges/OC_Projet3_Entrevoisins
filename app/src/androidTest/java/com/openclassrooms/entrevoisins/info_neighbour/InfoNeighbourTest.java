@@ -1,8 +1,6 @@
 package com.openclassrooms.entrevoisins.info_neighbour;
 
 import android.support.test.espresso.action.PressBackAction;
-import android.support.test.espresso.action.TypeTextAction;
-import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
@@ -145,40 +143,6 @@ public class InfoNeighbourTest {
         onView(ViewMatchers.withId(R.id.aboutMe))
                 .check(matches(withText(mNeighbour.get(0).getAboutMe())));
 
-    }
-
-    /**
-     * Check if modifications on Neighbour in AddNeighbourActivity are displayed
-     * in ActivityInfoNeighbour
-     */
-    @Test
-    public void checkIfModificationsOnActivityInfoNeighbourAreApplied() {
-        // Go to ActivityInfoNeighbour
-        onView(ViewMatchers.withId(R.id.list_neighbours))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-
-        // Click on "Edit" icon menu
-        onView(ViewMatchers.withId(R.id.edit_item_menu))
-                .perform(click());
-
-        // Modify Name
-        onView(ViewMatchers.withId(R.id.name))
-                .perform(new TypeTextAction(" M."));
-
-        // Close soft keyboard
-        onView(ViewMatchers.isRoot())
-                .perform(ViewActions.closeSoftKeyboard());
-
-        // Click on save button
-        onView(ViewMatchers.withId(R.id.create))
-                .perform(click());
-
-        // Check if new name is displayed
-        onView(ViewMatchers.withId(R.id.name_on_avatar_neighbour))
-                .check(matches(withText(mNeighbour.get(0).getName() + " M.")));
-
-        onView(ViewMatchers.withId(R.id.title_name_neighbour))
-                .check(matches(withText(mNeighbour.get(0).getName() + " M.")));
     }
 
 }
