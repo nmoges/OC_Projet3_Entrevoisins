@@ -8,7 +8,7 @@ import android.support.test.runner.AndroidJUnit4;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.DummyNeighbourGenerator;
-import com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity;
+import com.openclassrooms.entrevoisins.ui.ListNeighbourActivity;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -24,6 +24,10 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.openclassrooms.entrevoisins.service.DummyNeighbourGenerator.DUMMY_NEIGHBOURS;
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.hamcrest.core.IsNull.notNullValue;
+
+/**
+ * Test class for InfoNeighbourActivity test
+ */
 
 @RunWith(AndroidJUnit4.class)
 public class InfoNeighbourTest {
@@ -51,7 +55,7 @@ public class InfoNeighbourTest {
     }
 
     /**
-     * When an item is clicked, the activity ActivityInfoNeighbour is launched
+     * When an item is clicked, the activity InfoNeighbourActivity is launched
      */
     @Test
     public void activityInfoNeighbour_isLaunched_onClickItem(){
@@ -59,21 +63,21 @@ public class InfoNeighbourTest {
         onView(ViewMatchers.withId(R.id.list_neighbours))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
-        // Check if ActivityInfoNeighbour layout is displayed (activity launched)
+        // Check if InfoNeighbourActivity layout is displayed (activity launched)
         onView(ViewMatchers.withId(R.id.activity_info_neighbour))
                 .check(matches(isDisplayed()));
     }
 
     /**
      * For every items in the list :
-     * - Launch ActivityInfoNeighbour
+     * - Launch InfoNeighbourActivity
      * - Check if information displayed is correct
      */
     @Test
     public void checkInfoOnActivityInfoNeighbour()  {
 
         for(int i = 0; i < ITEMS_COUNT; i++){
-            // Go to ActivityInfoNeighbour
+            // Go to InfoNeighbourActivity
             onView(ViewMatchers.withId(R.id.list_neighbours))
                     .perform(RecyclerViewActions.scrollToPosition(i))
                     .perform(RecyclerViewActions.actionOnItemAtPosition(i, click()));
@@ -105,12 +109,12 @@ public class InfoNeighbourTest {
     }
 
     /**
-     * Check if clicking on "Edit" button in ActivityInfoNeighbour activity
+     * Check if clicking on "Edit" button in InfoNeighbourActivity activity
      * launches AddNeighbourActivity activity to modify current Neighbour
      */
     @Test
     public void checkIfCurrentNeighbourInfoIsDisplayed_onClickItemMenu(){
-        // Go to ActivityInfoNeighbour
+        // Go to InfoNeighbourActivity
         onView(ViewMatchers.withId(R.id.list_neighbours))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
@@ -118,7 +122,7 @@ public class InfoNeighbourTest {
         onView(ViewMatchers.withId(R.id.edit_item_menu))
                 .perform(click());
 
-        // Check if ActivityAddNeighbour is launched
+        // Check if AddNeighbourActivity is launched
         onView(ViewMatchers.withId(R.id.activity_add_neighbour))
                 .check(matches(isDisplayed()));
 

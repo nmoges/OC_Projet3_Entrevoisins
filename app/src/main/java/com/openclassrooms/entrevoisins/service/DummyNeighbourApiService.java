@@ -11,7 +11,6 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
 
     private List<Neighbour> neighbours = DummyNeighbourGenerator.generateNeighbours();
 
-
     /**
      * {@inheritDoc}
      */
@@ -77,4 +76,5 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
         // Repositioning new version of Neighbour in list
         createNeighbour(neighbour);
     }
+
 }

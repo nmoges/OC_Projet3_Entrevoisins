@@ -1,4 +1,4 @@
-package com.openclassrooms.entrevoisins.ui.neighbour_list;
+package com.openclassrooms.entrevoisins.ui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
-import com.openclassrooms.entrevoisins.events.UnselectFavoriteEvent;
+import com.openclassrooms.entrevoisins.events.ChangeFavoriteEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 import org.greenrobot.eventbus.EventBus;
@@ -24,6 +24,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * Activity which display all information about selected Neighbour in list
+ */
 public class InfoNeighbourActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar_activity_info)
@@ -84,6 +87,9 @@ public class InfoNeighbourActivity extends AppCompatActivity {
         EventBus.getDefault().unregister(this);
     }
 
+    /**
+     * Initialize all elements displayed with info Neighbour
+     */
     public void initializeInfoToDisplay(){
         //TextViews
         nameOnAvatar.setText(mNeighbour.getName());
@@ -107,14 +113,21 @@ public class InfoNeighbourActivity extends AppCompatActivity {
         else{ fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_border_yellow_24dp, null));}
     }
 
+    /**
+     * Updates list of "Favorite" Neighbour after "ChangeFavoriteEvent" event
+     * @param event : UnselectedFavoriteEvent
+     */
     @Subscribe
-    public void updateFavoriteStatusInList(UnselectFavoriteEvent event){
+    public void updateFavoriteStatusInList(ChangeFavoriteEvent event){
         // Find which item must been modified in list
         int index = mApiService.getNeighbours().indexOf(event.favorite);
         // Update "Favorite" status
         mApiService.getNeighbours().get(index).setFavorite(mNeighbour.getFavorite());
     }
 
+    /**
+     * Update drawable of the FloatingActionButton on click
+     */
     @OnClick(R.id.fab)
     public void updateFabDisplay(){
         // Update "Favorite" status
@@ -141,10 +154,12 @@ public class InfoNeighbourActivity extends AppCompatActivity {
             launchActivityInfo.putExtra(TAG_NEIGHBOUR_INTENT_EXTRA, mNeighbour);
             startActivityForResult(launchActivityInfo, TAG_REQUEST_CODE_RESULTS);
         }
-        
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Initializes Toolbar by adding a "Back" button
+     */
     public void initializeToolbar(){
         setSupportActionBar(toolbar);
 
@@ -160,6 +175,13 @@ public class InfoNeighbourActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
+    /**
+     * Overrided to catch results from AddNeighbourActivity and update
+     * Neighbour information display if Neighbour has been modified.
+     * @param requestCode : int
+     * @param resultCode : int
+     * @param data : Intent
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
 
@@ -170,6 +192,7 @@ public class InfoNeighbourActivity extends AppCompatActivity {
                 // Update mNeighbour fields
                 Neighbour newNeighbour = (Neighbour) data.getSerializableExtra("UPDATE");
 
+                // Set all text fields
                 mNeighbour.setName(newNeighbour.getName());
                 mNeighbour.setName(newNeighbour.getName());
                 mNeighbour.setAddress(newNeighbour.getAddress());
@@ -186,7 +209,10 @@ public class InfoNeighbourActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Launch an "ChangeFavoriteEvent" to save current "Favorite" status
+     */
     public void saveFavoriteStatus(){
-        EventBus.getDefault().post(new UnselectFavoriteEvent(mNeighbour));
+        EventBus.getDefault().post(new ChangeFavoriteEvent(mNeighbour));
     }
 }

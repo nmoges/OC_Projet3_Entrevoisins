@@ -1,4 +1,4 @@
-package com.openclassrooms.entrevoisins.ui.neighbour_list;
+package com.openclassrooms.entrevoisins.ui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -24,6 +24,10 @@ import butterknife.OnClick;
 import android.support.v7.widget.Toolbar;
 import java.util.Objects;
 
+/**
+ * Activity which allows user to create a new Neighbour and add it to the list of Neighbour,
+ * or to modify an existing Neighbour
+ */
 public class AddNeighbourActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar_activity_add)
@@ -58,7 +62,6 @@ public class AddNeighbourActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        // Initialize toolbar
         initializeToolbar();
 
         mApiService = DI.getNeighbourApiService();
@@ -86,6 +89,9 @@ public class AddNeighbourActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Method which initialize toolbar by adding a back icon
+     */
     public void initializeToolbar(){
         setSupportActionBar(toolbar);
         try{
@@ -94,10 +100,11 @@ public class AddNeighbourActivity extends AppCompatActivity {
         } catch (NullPointerException exception){
             exception.printStackTrace();
         }
-
-
     }
 
+    /**
+     * Initialize elements
+     */
     private void init() {
         mNeighbourImage = randomImage();
 
@@ -140,7 +147,6 @@ public class AddNeighbourActivity extends AppCompatActivity {
         }
         else{
             // Case Modification existing Neighbour (neighbourToModify initialized)
-
             // Store updates
             neighbourToModify.setName(Objects.requireNonNull(mNameInput.getEditText()).getText().toString());
             neighbourToModify.setPhoneNumber(Objects.requireNonNull(mPhoneInput.getEditText()).getText().toString());
@@ -158,7 +164,7 @@ public class AddNeighbourActivity extends AppCompatActivity {
 
     /**
      * Generate a random image. Useful to mock image picker
-     * @return String
+     * @return : String
      */
     String randomImage() {
         return "https://i.pravatar.cc/150?u="+ System.currentTimeMillis();
@@ -173,16 +179,22 @@ public class AddNeighbourActivity extends AppCompatActivity {
         ActivityCompat.startActivity(activity, intent, null);
     }
 
+    /**
+     * Initializes elements displayed with selected Neighbour to modify
+     * @param infoNeighbour : Intent
+     */
     public void restoreNeighbourInfo(Intent infoNeighbour){
 
         neighbourToModify = (Neighbour) infoNeighbour.getSerializableExtra(TAG_NEIGHBOUR_INTENT_EXTRA);
 
+        // Load all text fields
         Objects.requireNonNull(mNameInput.getEditText()).setText(neighbourToModify.getName(), null);
         Objects.requireNonNull(mPhoneInput.getEditText()).setText(neighbourToModify.getPhoneNumber(), null);
         Objects.requireNonNull(mAddressInput.getEditText()).setText(neighbourToModify.getAddress(), null);
         Objects.requireNonNull(mAboutMeInput.getEditText()).setText(neighbourToModify.getAboutMe(), null);
         Objects.requireNonNull(mWebSiteInput.getEditText()).setText(neighbourToModify.getWebSite(), null);
 
+        // Load image
         Glide.with(this)
                 .load(neighbourToModify.getAvatarUrl())
                 .apply(RequestOptions.circleCropTransform())

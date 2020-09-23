@@ -62,6 +62,15 @@ public class NeighbourServiceTest {
     }
 
     @Test
+    public void accessNonExistingNeighbour() {
+        try{
+            Neighbour neighbourToDelete = service.getNeighbours().get(service.getNeighbours().size());
+        } catch(IndexOutOfBoundsException exception){
+            exception.printStackTrace();
+        }
+    }
+
+    @Test
     public void addNeighbourWithSuccess(){
         Neighbour neighbourToAdd = new Neighbour(
                                         service.getNeighbours().size()+1,

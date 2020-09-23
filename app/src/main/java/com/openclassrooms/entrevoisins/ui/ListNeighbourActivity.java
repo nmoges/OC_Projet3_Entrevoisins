@@ -1,4 +1,4 @@
-package com.openclassrooms.entrevoisins.ui.neighbour_list;
+package com.openclassrooms.entrevoisins.ui;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -13,6 +13,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * This activity displays both Neighbour list and Favorite Neighbour list
+ * using two fragments
+ */
 public class ListNeighbourActivity extends AppCompatActivity {
 
     // UI Components
@@ -27,7 +31,6 @@ public class ListNeighbourActivity extends AppCompatActivity {
 
     private NeighbourApiService mApiService;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,19 +44,30 @@ public class ListNeighbourActivity extends AppCompatActivity {
         mTabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
         mApiService = DI.getNeighbourApiService();
-
     }
+
+    /**
+     * In case of configuration changed (screen rotation)
+     * reload data
+     * @param newConfig
+     */
     @Override
     public void onConfigurationChanged(Configuration newConfig){
         super.onConfigurationChanged(newConfig);
 
         mApiService = DI.getNeighbourApiService();
     }
+
     @OnClick(R.id.add_neighbour)
     void addNeighbour() {
         AddNeighbourActivity.navigate(this);
     }
 
+    /**
+     * Getters :
+     * Makes attributes from parent activity ListNeighbourActivity accessible
+     * from child Fragments
+     */
     public ListNeighbourPagerAdapter getMPagerAdapter(){
         return this.mPagerAdapter;
     }

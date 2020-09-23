@@ -37,4 +37,5 @@ public interface NeighbourApiService {
      * @param neighbour: Neighbour
      */
     void updateDataNeighbour(Neighbour neighbour);
+
 }

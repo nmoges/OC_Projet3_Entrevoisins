@@ -1,4 +1,4 @@
-package com.openclassrooms.entrevoisins.ui.neighbour_list;
+package com.openclassrooms.entrevoisins.ui.favorite_list;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -12,13 +12,16 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
-import com.openclassrooms.entrevoisins.events.UnselectFavoriteEvent;
+import com.openclassrooms.entrevoisins.events.ChangeFavoriteEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import org.greenrobot.eventbus.EventBus;
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * Adapter for "Favorite" Fragment recycler view
+ */
 public class MyFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<MyFavoriteRecyclerViewAdapter.ViewHolder>{
 
     private final List<Neighbour> mFavorites;
@@ -45,7 +48,10 @@ public class MyFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<MyFavori
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Neighbour favorite = mFavorites.get(position);
 
+        // Display Favorite Neighbour Name
         holder.mFavoriteName.setText(favorite.getName());
+
+        // Display Favorite Neighbour Avatar
         Glide.with(holder.mFavoriteAvatar.getContext())
                 .load(favorite.getAvatarUrl())
                 .apply(RequestOptions.circleCropTransform())
@@ -54,8 +60,9 @@ public class MyFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<MyFavori
                 .skipMemoryCache(false)
                 .into(holder.mFavoriteAvatar);
 
+        // Handle click on Favorite icon
         holder.mFavoriteButton.setOnClickListener((View v) -> {
-                EventBus.getDefault().post(new UnselectFavoriteEvent(favorite));
+                EventBus.getDefault().post(new ChangeFavoriteEvent(favorite));
             }
         );
     }
@@ -93,6 +100,9 @@ public class MyFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<MyFavori
         }
     }
 
+    /**
+     * Interface to catch click interactions on Favorite Neighbour item
+     */
     public interface ListFavoriteListener{
         void onClickItemFavorite(int position);
     }

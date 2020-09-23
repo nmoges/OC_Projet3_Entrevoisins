@@ -1,7 +1,5 @@
 package com.openclassrooms.entrevoisins.model;
 
-import android.graphics.drawable.Drawable;
-
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -44,7 +42,7 @@ public class Neighbour implements Serializable {
      * @param aboutMe : String
      * @param favorite : boolean
      * @param webSite : String
-     */
+     **/
     public Neighbour(long id, String name, String avatarUrl, String address,
                      String phoneNumber, String aboutMe, boolean favorite, String webSite) {
         this.id = id;

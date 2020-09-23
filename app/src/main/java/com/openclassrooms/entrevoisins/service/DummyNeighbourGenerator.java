@@ -7,6 +7,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Contains a list of predefined Neighbour
+ */
 public abstract class DummyNeighbourGenerator {
 
     public static List<Neighbour> DUMMY_NEIGHBOURS = Arrays.asList(
@@ -173,6 +176,10 @@ public abstract class DummyNeighbourGenerator {
                     "www.facebook.fr/ludovic")
     );
 
+    /**
+     * Generate a list of Neighbour in the lexicographic order
+     * @return : List<Neighbour
+     */
     public static List<Neighbour> generateNeighbours() {
 
         NeighbourComparator comparator = new NeighbourComparator();

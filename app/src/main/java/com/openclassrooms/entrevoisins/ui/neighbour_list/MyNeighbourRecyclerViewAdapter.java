@@ -19,6 +19,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * Adapter for Neighbour Fragment recycler view
+ */
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> {
 
     private final List<Neighbour> mNeighbours;
@@ -44,8 +47,11 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Neighbour neighbour = mNeighbours.get(position);
+
+        // Display Neighbour Name
         holder.mNeighbourName.setText(neighbour.getName());
 
+        // Display Neighbour Avatar
         Glide.with(holder.mNeighbourAvatar.getContext())
                     .load(neighbour.getAvatarUrl())
                     .apply(RequestOptions.circleCropTransform())
@@ -54,6 +60,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                     .skipMemoryCache(false)
                     .into(holder.mNeighbourAvatar);
 
+        // Handle click on Trash icon
         holder.mDeleteButton.setOnClickListener((View v) -> {
                 EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
             }
@@ -91,6 +98,9 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         }
     }
 
+    /**
+     * Interface to catch click interactions on Neighbour item
+     */
     public interface ListNeighbourListener {
         void onClickItemNeighbour(int position);
     }

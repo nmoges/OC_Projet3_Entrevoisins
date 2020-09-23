@@ -1,4 +1,4 @@
-package com.openclassrooms.entrevoisins.ui.neighbour_list;
+package com.openclassrooms.entrevoisins.ui.favorite_list;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,14 +11,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.openclassrooms.entrevoisins.R;
-import com.openclassrooms.entrevoisins.events.UnselectFavoriteEvent;
+import com.openclassrooms.entrevoisins.events.ChangeFavoriteEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.ui.InfoNeighbourActivity;
+import com.openclassrooms.entrevoisins.ui.ListNeighbourActivity;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Fragment which display all Neighbour selected as "Favorite"
+ */
 public class FavoriteFragment extends Fragment implements MyFavoriteRecyclerViewAdapter.ListFavoriteListener {
 
     private List<Neighbour> mFavorites = new ArrayList<>();
@@ -75,8 +80,10 @@ public class FavoriteFragment extends Fragment implements MyFavoriteRecyclerView
         EventBus.getDefault().unregister(this);
     }
 
+    /**
+     * Initialize "Favorite" list to display
+     */
     public void initFavoritesList(){
-
         mFavorites.clear();
 
         // Get all favorite neighbours
@@ -103,11 +110,11 @@ public class FavoriteFragment extends Fragment implements MyFavoriteRecyclerView
     }
 
     /**
-     * Updates "Favorite" list displayed after an UnselectFavoriteEvent event.
-     * @param event : UnselectFavoriteEvent
+     * Updates "Favorite" list displayed after an ChangeFavoriteEvent event.
+     * @param event : ChangeFavoriteEvent
      */
     @Subscribe
-    public void onUnselectFavorite(UnselectFavoriteEvent event){
+    public void onUnselectFavorite(ChangeFavoriteEvent event){
         // Remove from displayed favorite list
         mFavorites.remove(event.favorite);
 
@@ -118,7 +125,6 @@ public class FavoriteFragment extends Fragment implements MyFavoriteRecyclerView
         try{ Objects.requireNonNull(mRecyclerView.getAdapter()).notifyDataSetChanged(); }
         catch (NullPointerException exception){ exception.printStackTrace(); }
     }
-
 
     /**
      * Launches InfoNeighbourActitivy from "Favorite" clicked item

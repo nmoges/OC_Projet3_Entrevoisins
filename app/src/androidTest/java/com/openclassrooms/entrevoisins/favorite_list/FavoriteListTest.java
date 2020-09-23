@@ -10,7 +10,7 @@ import android.support.test.runner.AndroidJUnit4;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.DummyNeighbourGenerator;
-import com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity;
+import com.openclassrooms.entrevoisins.ui.ListNeighbourActivity;
 import com.openclassrooms.entrevoisins.utils.FavoriteViewAction;
 import org.junit.Before;
 import org.junit.Rule;
@@ -30,9 +30,8 @@ import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInA
 import static org.hamcrest.core.IsNull.notNullValue;
 
 /**
- * Test class for list of neighbours
+ * Test class for list of favorites
  */
-
 @RunWith(AndroidJUnit4.class)
 public class FavoriteListTest {
 
@@ -65,7 +64,6 @@ public class FavoriteListTest {
                 mFavorites.add(mNeighbour.get(i));
             }
         }
-
         ITEM_COUNT = mFavorites.size();
     }
 
