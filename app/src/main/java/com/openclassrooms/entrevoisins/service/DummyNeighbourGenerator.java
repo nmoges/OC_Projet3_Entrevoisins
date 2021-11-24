@@ -13,6 +13,7 @@ import java.util.List;
 public abstract class DummyNeighbourGenerator {
 
     public static List<Neighbour> DUMMY_NEIGHBOURS = Arrays.asList(
+            // Url link : Photo by Roberto Nickson on Unsplash
             new Neighbour(1, "Caroline",
                     "https://i.picsum.photos/id/1011/5472/3648.jpg?hmac=Koo9845x2akkVzVFX3xxAc9BCkeGYA9VRVfLE4f0Zzk",
                     "Saint-Pierre-du-Mont ; 5km",
@@ -24,7 +25,7 @@ public abstract class DummyNeighbourGenerator {
                             "Integer semper diam et lorem iaculis pulvinar.",
                     true,
                     "www.facebook.fr/caroline"),
-
+            // Url link : Photo by Scott Webb on Unsplash
             new Neighbour(2,
                     "Jack",
                     "https://i.picsum.photos/id/1012/3973/2639.jpg?hmac=s2eybz51lnKy2ZHkE2wsgc6S81fVD1W2NKYOSh8bzDc",
@@ -43,7 +44,7 @@ public abstract class DummyNeighbourGenerator {
                             "in velit placerat vehicula nec in purus.",
                     true,
                     "www.facebook.fr/jack"),
-
+            // Url link : Photo by Roksolana Zasiadko on Unsplash
             new Neighbour(3,
                     "Chloé",
                     "https://i.picsum.photos/id/1027/2848/4272.jpg?hmac=EAR-f6uEqI1iZJjB6-NzoZTnmaX0oI0th3z8Y78UpKM",
@@ -52,7 +53,7 @@ public abstract class DummyNeighbourGenerator {
                     "Sed ultricies suscipit semper. Fusce non blandit quam. ",
                     false,
                     "www.facebook.fr/chloe"),
-
+            // Url link : Photo by Alejandro Escamilla on Unsplash
             new Neighbour(4,
                     "Vincent",
                     "https://i.picsum.photos/id/22/4434/3729.jpg?hmac=fjZdkSMZJNFgsoDh8Qo5zdA_nSGUAWvKLyyqmEt2xs0",
@@ -64,7 +65,7 @@ public abstract class DummyNeighbourGenerator {
                             "tortor quis, consectetur mauris. ",
                     true,
                     "www.facebook.fr/vincent"),
-
+            // Url link : Photo by Leon Biss on Unsplash
             new Neighbour(5,
                     "Elodie",
                     "https://i.picsum.photos/id/399/2048/1365.jpg?hmac=Tm7jwbWj0i70u952g5yC0da-gxScdY2mQ6gjKrP8Haw",
@@ -75,7 +76,7 @@ public abstract class DummyNeighbourGenerator {
                             "lectus sapien in neque. ",
                     true,
                     "www.facebook.fr/elodie"),
-
+            // Url link : Photo by Wellington Sanipe on Unsplash
             new Neighbour(6,
                     "Sylvain",
                     "https://i.picsum.photos/id/375/5184/3456.jpg?hmac=3OUWWnSmq1CUXU7cmTnctSvhQYvyME_osftkbJynX04",
@@ -89,7 +90,7 @@ public abstract class DummyNeighbourGenerator {
                             "hendrerit dolor, non gravida urna quam id eros. ",
                     false,
                     "www.facebook.fr/sylvain"),
-
+            // Url link : Photo by Sergey Zolkin on Unsplash
             new Neighbour(7,
                     "Laetitia",
                     "https://i.picsum.photos/id/628/2509/1673.jpg?hmac=TUdtbj7l4rQx5WGHuFiV_9ArjkAkt6w2Zx8zz-aFwwY",
@@ -98,7 +99,7 @@ public abstract class DummyNeighbourGenerator {
                     "Vestibulum non leo vel mi ultrices pellentesque. ",
                     true,
                     "www.facebook.fr/laetitia"),
-
+            // Url link : Photo by Gonzalo Poblete on Unsplash
             new Neighbour(8,
                     "Dan",
                     "https://i.picsum.photos/id/453/2048/1365.jpg?hmac=A8uxtdn4Y600Z5b2ngnn9hCXAx8sUnOVzprtDnz6DK8",
@@ -107,7 +108,7 @@ public abstract class DummyNeighbourGenerator {
                     "Cras non dapibus arcu. ",
                     true,
                     "www.facebook.fr/dan"),
-
+            // Url link : Photo by Todd Quackenbush on Unsplash
             new Neighbour(9,
                     "Joseph",
                     "https://i.picsum.photos/id/473/5616/3744.jpg?hmac=4tP7GutJ3LGRXeprD581uaNnJJGrhF57f08OOtMm1q0",
@@ -119,7 +120,7 @@ public abstract class DummyNeighbourGenerator {
                             "purus ullamcorper ipsum, quis congue velit mi sed lorem.",
                     false,
                     "www.facebook.fr/joseph"),
-
+            // Url link : Photo by Alexander Shustov on Unsplash
             new Neighbour(10,
                     "Emma",
                     "https://i.picsum.photos/id/64/4326/2884.jpg?hmac=9_SzX666YRpR_fOyYStXpfSiJ_edO3ghlSRnH2w09Kg",
@@ -136,7 +137,7 @@ public abstract class DummyNeighbourGenerator {
                             "vitae tristique nibh euismod.",
                     false,
                     "www.facebook.fr/emma"),
-
+            // Url link : Photo by Jennifer Trovato on Unsplash
             new Neighbour(11,
                     "Patrick",
                     "https://i.picsum.photos/id/91/3504/2336.jpg?hmac=tK6z7RReLgUlCuf4flDKeg57o6CUAbgklgLsGL0UowU",
@@ -155,7 +156,7 @@ public abstract class DummyNeighbourGenerator {
                     "per inceptos himenaeos.",
                     true,
                     "www.facebook.fr/patrick"),
-
+            // Url link : Photo by Lechon Kirb on Unsplash
             new Neighbour(12,
                     "Ludovic",
                     "https://i.picsum.photos/id/804/6000/3376.jpg?hmac=AZ4VZdij0jPu8BKZRbiE2lEMJGGjSFv43ii3RHRugco",
